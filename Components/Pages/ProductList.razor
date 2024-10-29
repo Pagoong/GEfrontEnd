@@ -1,0 +1,100 @@
+﻿@page "/products"
+@using GEfrontEnd.Model
+@inject HttpClient Http
+@rendermode InteractiveServer
+@inject NavigationManager UriHelper
+@inject NavigationManager _navigationManager
+
+
+<h3>Product List</h3>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!products.Any())
+{
+    <p>No products available.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Description</th>
+                <th>Action</th> <!-- New column for button -->
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Version</td>
+                    <td>@product.Description</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => DeleteProduct(product.Id)">Delete</button>
+                        <button class="btn btn-primary" @onclick="() => UpdateProduct(product.Id)">Update</button>
+                        <button class="btn btn-primary" @onclick="() => NavigateProduct(product.Id)">View</button>
+                    </td> <!-- Button in each row -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    //Stores the data in a list of products
+    private List<Product> products;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        products = await Http.GetFromJsonAsync<List<Product>>("http://localhost:5042/products");
+    }
+
+    
+    private async Task DeleteProduct(int id)
+    {
+        // Define the endpoint URL for the DELETE request using string interpolation to include the id
+        var deleteUrl = $"http://localhost:5042/delete/{id}";
+
+        // Send DELETE request
+        var response = await Http.DeleteAsync(deleteUrl);
+
+        // Optional: Check if the response was successful
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Product deleted successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Error occurred while deleting the product.");
+        }
+
+        _navigationManager.NavigateTo("/");
+    }
+
+    //Update Function
+    private void  UpdateProduct(int passID)
+    {
+	    UriHelper.NavigateTo($"getItem/{passID}");
+    }
+
+
+
+
+    private string parameter = "ParameterValue";
+    private void NavigateProduct(int passID)
+    {
+        UriHelper.NavigateTo($"getItem/{passID}");
+      
+    }
+}

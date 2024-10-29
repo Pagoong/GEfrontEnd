@@ -1,0 +1,43 @@
+﻿@page "/getItem/{passID}"
+@using GEfrontEnd.Model
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@rendermode InteractiveServer
+
+
+<h3>Product:   @product?.Name</h3> <!-- Display product name -->
+<h3>ID: @product?.Id</h3>
+<h3>Version: @product?.Version</h3>
+<h3>Name: @product?.Name</h3>
+<h3>Description: @product?.Description</h3>
+
+
+
+
+
+@code {
+    //get ID from previous page
+    [Parameter]
+    public String passID { get; set; }
+
+    private Product product = new Product();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+	    if (!string.IsNullOrEmpty(passID) && int.TryParse(passID, out int id))
+	    {
+		    // Now pass the ID to the API call
+		    product = await Http.GetFromJsonAsync<Product>($"http://localhost:5042/getItem/{id}");
+	    }
+	    else
+	    {
+		    // Handle case where passID is null, empty, or invalid
+		    Console.WriteLine("Invalid or missing passID");
+	    }
+    }
+
+
+    }
+
+

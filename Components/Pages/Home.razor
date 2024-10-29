@@ -1,0 +1,78 @@
+﻿@page "/"
+@using GEfrontEnd.Model
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<EditForm method="post" Model="product" OnSubmit="AddProductPost" FormName="Name">
+	<DataAnnotationsValidator></DataAnnotationsValidator>
+	<ValidationSummary></ValidationSummary>
+
+	<label for="Id">Id : </label>
+	<InputNumber id="Id" @bind-Value="product.Id"></InputNumber>
+
+	<label for="Name">Product Name: </label>
+	<InputText id="Name" @bind-Value="product.Name"></InputText>
+
+	<label for="Version">Version: </label>
+	<InputText id="Version" @bind-Value="product.Version"></InputText>
+
+	<label for="Description">Description: </label>
+	<InputText id="Description"@bind-Value="product.Description"></InputText>
+
+
+
+	<button type="submit"></button>
+</EditForm>
+
+
+
+
+@code{
+
+
+	public void HandleFormSubmission(EditContext context)
+	{
+		
+	}
+
+	
+		 Product product = new Product();
+
+
+
+		private async Task AddProductPost()
+
+
+
+		{
+			var response = await Http.PostAsJsonAsync("product", product);
+
+			Console.WriteLine(product.Name);
+
+
+			if (response.IsSuccessStatusCode)
+			{
+				// Navigate to a different page or show a success message
+				NavigationManager.NavigateTo("/products");
+				Console.WriteLine(product.Name);
+
+			}
+			else
+			{
+				var errorDetails = await response.Content.ReadAsStringAsync();
+				Console.WriteLine($"Error adding product: {errorDetails}");
+				Console.WriteLine(product.Name);
+
+			}
+		}
+	
+
+}

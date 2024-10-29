@@ -1,0 +1,54 @@
+﻿@page "/delete"
+@using GEfrontEnd.Model
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<h3>Delete</h3>
+
+
+
+
+@code {
+	String Id = "";
+
+
+
+	protected override async Task OnInitializedAsync()
+	{
+
+
+	}
+
+
+
+
+	private async Task DeleteProductAsync(String Id)
+	{
+
+		//Update the Id
+
+
+		// Define the endpoint URL for the DELETE request
+		var deleteUrl = $"http://localhost:5042/delete/222";
+
+
+		// Send DELETE request
+		var response = await Http.DeleteAsync(deleteUrl);
+
+
+		//Check if the delete was successful
+		if (response.IsSuccessStatusCode)
+		{
+		//	Optionally, refresh the list of products or show a success message
+			Console.WriteLine("Product deleted successfully.");
+		}
+		else
+		{
+			//Handle the error response
+			Console.WriteLine("Error occurred while deleting the product.");
+		}
+	}
+
+
+}

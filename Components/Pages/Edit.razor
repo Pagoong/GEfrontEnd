@@ -1,0 +1,93 @@
+﻿@page "/Edit"
+@using GEfrontEnd.Model
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<EditForm method="post" Model="product" OnSubmit="editProduct" FormName="Name">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="form-group">
+		<label for="ID">ID</label>
+		<InputNumber id="ID" @bind-Value="product.Id" class="form-control" />
+		<ValidationMessage For="() => product.Id" />
+	</div>
+
+	<div class="form-group">
+		<label for="Name">Name</label>
+		<InputText id="Name" @bind-Value="product.Name" class="form-control" />
+		<ValidationMessage For="() => product.Name" />
+	</div>
+
+	<div class="form-group">
+		<label for="Version">Version</label>
+		<InputText id="Version" @bind-Value="product.Version" class="form-control" />
+	</div>
+
+	<div class="form-group">
+		<label for="Description">Description</label>
+		<InputText id="Description" @bind-Value="product.Description" class="form-control" />
+	</div>
+
+	<button type="submit" class="btn btn-primary">Create</button>
+</EditForm>
+
+
+@code {
+
+	Product product = new Product();
+
+	private async Task editProduct()
+	{
+
+
+	//https://learn.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-8.0#post-as-json-postasjsonasync
+		//await Http.PutAsJsonAsync($"todoitems/{editItem.Id}", editItem);
+
+
+		var response = await Http.PostAsJsonAsync("product", product);
+
+		Console.WriteLine(product.Name);
+
+
+		if (response.IsSuccessStatusCode)
+		{
+			// Navigate to a different page or show a success message
+			NavigationManager.NavigateTo("/products");
+			Console.WriteLine(product.Name);
+
+		}
+		else
+		{
+			var errorDetails = await response.Content.ReadAsStringAsync();
+			Console.WriteLine($"Error adding product: {errorDetails}");
+			Console.WriteLine(product.Name);
+
+		}
+	}
+
+	private async Task UpdateProduct(int id)
+	{
+		// Define the endpoint URL for the DELETE request using string interpolation to include the id
+		var deleteUrl = $"http://localhost:5042/delete/{id}";
+
+		// Send DELETE request
+		var response = await Http.DeleteAsync(deleteUrl);
+
+		// Optional: Check if the response was successful
+		if (response.IsSuccessStatusCode)
+		{
+			Console.WriteLine("Product Updated successfully.");
+		}
+		else
+		{
+			Console.WriteLine("Error occurred while Updating the product.");
+		}
+
+	}
+
+
+
+}
