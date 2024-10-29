@@ -534,3 +534,4 @@ C:\Users\223139699\Projects\GEfrontEnd\GEfrontEnd\obj\Debug\net8.0\refint\GEfron
 C:\Users\223139699\Projects\GEfrontEnd\GEfrontEnd\obj\Debug\net8.0\GEfrontEnd.pdb
 C:\Users\223139699\Projects\GEfrontEnd\GEfrontEnd\obj\Debug\net8.0\GEfrontEnd.genruntimeconfig.cache
 C:\Users\223139699\Projects\GEfrontEnd\GEfrontEnd\obj\Debug\net8.0\ref\GEfrontEnd.dll
+C:\Users\223139699\Projects\GEfrontEnd\GEfrontEnd\obj\Debug\net8.0\GEfrontEnd.sourcelink.json
