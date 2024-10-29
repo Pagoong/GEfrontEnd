@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GEfrontEnd")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+999f3d507a4e6b890eb80db17019e3aedf32f983")]
 [assembly: System.Reflection.AssemblyProductAttribute("GEfrontEnd")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GEfrontEnd")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
